@@ -43,7 +43,8 @@ function App() {
 
   return (
     <>
-      <div className="card" onSubmit={(e) => handleCreateContact(e)}>
+      <h1 className="text-4xl font-bold">Contactz</h1>
+      <div onSubmit={(e) => handleCreateContact(e)}>
         <div>
           <label htmlFor="name">Name</label>
           <input
