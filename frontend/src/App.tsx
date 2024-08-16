@@ -13,29 +13,31 @@ function App() {
   const [contacts, setContacts] = useState<Contact[]>([]);
 
   useEffect(() => {
-    const getContacts = async () => {
-      try {
-        const res = await axiosInstance.get("/contacts");
-        console.log(res);
-        setContacts(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     getContacts();
   }, []);
 
-  const handleCreateContact = async (e) => {
-    e.preventDefault();
+  const getContacts = async () => {
+    try {
+      const res = await axiosInstance.get("/contacts");
+      console.log(res);
+      setContacts(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const handleCreateContact = async () => {
     console.log("Creating...");
     try {
       const res = await axiosInstance.post("/contact", {
         name: name,
-        contact: contactNo,
+        contactNo: contactNo,
       });
       console.log(res);
+
+      if (res.data._id) {
+        getContacts();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +46,7 @@ function App() {
   return (
     <>
       <h1 className="text-4xl font-bold">Contactz</h1>
-      <div onSubmit={(e) => handleCreateContact(e)}>
+      <div>
         <div>
           <label htmlFor="name">Name</label>
           <input
@@ -62,16 +64,16 @@ function App() {
             onChange={(e) => setContactNo(e.target.value)}
           />
         </div>
-        <button type="submit">Create Contact</button>
+        <button onClick={() => handleCreateContact()}>Create Contact</button>
       </div>
-      <div>
-        {contacts.map((contact) => (
-          <div key={contact.id}>
-            <div>{contact.name}</div>
-            <div>{contact.contactNo}</div>
-          </div>
-        ))}
-      </div>
+      {contacts.length > 0
+        ? contacts.map((contact) => (
+            <div key={contact._id}>
+              <div>{contact.name}</div>
+              <div>{contact.contactNo}</div>
+            </div>
+          ))
+        : "No Contact Found"}
     </>
   );
 }
