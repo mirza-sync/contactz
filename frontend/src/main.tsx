@@ -1,10 +1,27 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ContactListPage } from "../pages/ContactListPage.tsx";
+import { CreateContactPage } from "../pages/CreateContactPage.tsx";
 
-createRoot(document.getElementById('root')!).render(
+const router = createBrowserRouter([
+  {
+    path: "contact/list",
+    element: <ContactListPage />,
+  },
+  {
+    path: "contact",
+    element: <CreateContactPage />,
+  },
+  {
+    path: "*",
+    element: <ContactListPage />,
+  },
+]);
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <RouterProvider router={router} />
+  </StrictMode>
+);
