@@ -26,20 +26,16 @@ export const ContactListPage = () => {
     <div className="flex flex-col gap-4 h-[80vh]">
       <div className="border-[1px] rounded-lg border-white overflow-y-auto p-4">
         <div className="flex w-full overflow-y-auto">
-          <div className="">
+          <div key={1}>
             {contacts.length > 0 &&
               contacts.map((contact) => (
-                <ContactWrapper key={contact._id!} position="left">
-                  {contact.name}
-                </ContactWrapper>
+                <ContactWrapper contact={contact} position="left" />
               ))}
           </div>
-          <div className="">
+          <div key={2}>
             {contacts.length > 0 &&
               contacts.map((contact) => (
-                <ContactWrapper key={contact._id!} position="right">
-                  {contact.contactNo}
-                </ContactWrapper>
+                <ContactWrapper contact={contact} position="right" />
               ))}
           </div>
         </div>

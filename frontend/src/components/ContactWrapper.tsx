@@ -1,22 +1,23 @@
+import { useNavigate } from "react-router-dom";
+import { Contact } from "../../constants/types";
+
 type ContactWrapperProps = {
-  key: string;
-  children: React.ReactNode;
+  contact: Contact;
   position: "left" | "right";
 };
 
-export const ContactWrapper = ({
-  key,
-  position,
-  children,
-}: ContactWrapperProps) => {
+export const ContactWrapper = ({ contact, position }: ContactWrapperProps) => {
+  const navigate = useNavigate();
+
   return (
     <div
-      key={key}
-      className={`px-4 py-2 ${
+      key={contact._id}
+      className={`${
         position == "left" ? "rounded-s-lg" : "rounded-e-lg"
-      } bg-slate-500 w-full mb-4 cursor-default`}
+      } bg-slate-500 w-full mb-4 cursor-pointer px-4 py-2`}
+      onClick={() => navigate(`/contact/${contact._id}`)}
     >
-      {children}
+      {position == "left" ? contact.name : contact.contactNo}
     </div>
   );
 };

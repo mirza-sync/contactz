@@ -1,16 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "../main";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const CreateContactPage = () => {
   const [name, setName] = useState("");
   const [contactNo, setContactNo] = useState("");
-  const navigate = useNavigate();
+  const [isEdit, setIsEdit] = useState(false);
 
-  const handleCreateContact = async (e) => {
-    console.log("Creating...");
+  const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    const getContactById = async (id: string) => {
+      try {
+        const res = await axiosInstance.get(`/contact/${id}`);
+        console.log(res.data);
+        setIsEdit(true);
+        setName(res.data.name);
+        setContactNo(res.data.contactNo);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (params.id) {
+      getContactById(params.id);
+    }
+  }, [params.id]);
+
+  const handleCreateContact = (e) => {
     e.preventDefault();
+    if (isEdit) {
+      updateContact();
+    } else {
+      createContact();
+    }
+  };
+
+  const createContact = async () => {
     try {
       const res = await axiosInstance.post("/contact", {
         name: name,
@@ -22,6 +49,19 @@ export const CreateContactPage = () => {
       } else {
         console.log("Error:", res.data);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateContact = async () => {
+    try {
+      const res = await axiosInstance.patch(`/contact/${params.id}`, {
+        name: name,
+        contactNo: contactNo,
+      });
+      console.log(res);
+      navigate("/contact/list");
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +81,7 @@ export const CreateContactPage = () => {
               id="name"
               type="text"
               required
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -53,11 +94,12 @@ export const CreateContactPage = () => {
               required
               minLength={10}
               maxLength={11}
+              value={contactNo}
               onChange={(e) => setContactNo(e.target.value)}
             />
           </div>
           <button type="submit" className="ml-auto">
-            Create
+            {isEdit ? "Update" : "Create"}
           </button>
         </form>
       </div>

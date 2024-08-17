@@ -12,6 +12,10 @@ export const axiosInstance = axios.create({
 
 const router = createBrowserRouter([
   {
+    path: "contact/:id",
+    element: <CreateContactPage />,
+  },
+  {
     path: "contact/list",
     element: <ContactListPage />,
   },
