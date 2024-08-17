@@ -48,11 +48,7 @@ def create_contact():
 
     except Exception as e:
         print("Create contact error:", e)
-        return jsonify(
-            {
-                "message": "Error creating contact",
-            }
-        )
+        return jsonify({"message": "Error creating contact"}), 500
 
 
 @app.route("/contacts", methods=["GET"])
@@ -63,11 +59,7 @@ def get_contacts():
         return jsonify(contacts_schema.dump(contacts)), 200
     except Exception as e:
         print("Get contacts error:", e)
-        return jsonify(
-            {
-                "message": "Error fetching contacts",
-            }
-        )
+        return jsonify({"message": "Error fetching contacts"}), 500
 
 
 @app.route("/contact/<id>", methods=["GET"])
@@ -80,7 +72,7 @@ def get_contact_by_id(id):
             return jsonify({"message": "Contact not found"}), 404
     except Exception as e:
         print("Get contact error:", e)
-        return jsonify({"message": "Error fetching contact"})
+        return jsonify({"message": "Error fetching contact"}), 500
 
 
 @app.route("/contact/<id>", methods=["PATCH"])
@@ -104,7 +96,7 @@ def update_contact(id):
             return jsonify({"message": "No changes made"}), 200
     except Exception as e:
         print("Update contact error:", e)
-        return jsonify({"message": "Error updating contact"})
+        return jsonify({"message": "Error updating contact"}), 500
 
 
 @app.route("/contact/<id>", methods=["DELETE"])
@@ -117,7 +109,7 @@ def delete_contact(id):
             return jsonify({"message": "Contact not found"}), 404
     except Exception as e:
         print("Delete contact error:", e)
-        return jsonify({"message": "Error delete contact"})
+        return jsonify({"message": "Error delete contact"}), 500
 
 
 if __name__ == "__main__":
