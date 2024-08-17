@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "../main";
 import { useNavigate, useParams } from "react-router-dom";
 import { GenericButton } from "../components/GenericButton";
+import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 export const CreateContactPage = () => {
   const [name, setName] = useState("");
@@ -19,8 +21,10 @@ export const CreateContactPage = () => {
         setIsEdit(true);
         setName(res.data.name);
         setContactNo(res.data.contactNo);
-      } catch (error) {
-        console.log(error);
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+          toast.error(error.message);
+        }
       }
     };
 
@@ -46,12 +50,15 @@ export const CreateContactPage = () => {
       });
       console.log(res);
       if (res.data._id) {
+        toast.success("Contact created");
         navigate("/contact/list");
       } else {
-        console.log("Error:", res.data);
+        toast.error(res.data.message);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -60,11 +67,14 @@ export const CreateContactPage = () => {
       const res = await axiosInstance.delete(`/contact/${id}`);
       console.log(res.data);
       if (res.status == 200) {
+        toast.success("Contact deleted");
         navigate("/contact/list");
       }
       console.log(res.data.message);
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -74,15 +84,22 @@ export const CreateContactPage = () => {
         name: name,
         contactNo: contactNo,
       });
-      console.log(res);
+      console.log("Update res", res);
+      if (res.status == 200) {
+        toast.success("Update success");
+      } else {
+        toast.error(res.data.message);
+      }
       navigate("/contact/list");
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.message);
+      }
     }
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col flex-grow max-w-md">
       <div className="flex items-end mb-4 gap-4">
         <h1 className="text-4xl font-bold">
           {isEdit ? "Edit" : "New"} Contact

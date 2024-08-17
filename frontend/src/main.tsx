@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ContactListPage } from "./pages/ContactListPage.tsx";
 import { CreateContactPage } from "./pages/CreateContactPage.tsx";
 import axios from "axios";
+import { Toaster } from "react-hot-toast";
 
 export const axiosInstance = axios.create({
   baseURL: "http://127.0.0.1:5000",
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <Toaster position="bottom-center" />
     <RouterProvider router={router} />
   </StrictMode>
 );

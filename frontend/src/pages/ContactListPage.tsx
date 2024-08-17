@@ -4,6 +4,8 @@ import { axiosInstance } from "../main";
 import { ContactWrapper } from "../components/ContactWrapper";
 import { useNavigate } from "react-router-dom";
 import { GenericButton } from "../components/GenericButton";
+import { AxiosError } from "axios";
+import toast from "react-hot-toast";
 
 export const ContactListPage = () => {
   const navigate = useNavigate();
@@ -18,8 +20,10 @@ export const ContactListPage = () => {
       const res = await axiosInstance.get("/contacts");
       console.log(res);
       setContacts(res.data);
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        toast.error(error.message);
+      }
     }
   };
 
