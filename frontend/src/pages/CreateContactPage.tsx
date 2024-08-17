@@ -28,7 +28,7 @@ export const CreateContactPage = () => {
     }
   }, [params.id]);
 
-  const handleCreateContact = (e) => {
+  const handleCreateContact = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isEdit) {
       updateContact();
@@ -49,6 +49,19 @@ export const CreateContactPage = () => {
       } else {
         console.log("Error:", res.data);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteContact = async (id: string) => {
+    try {
+      const res = await axiosInstance.delete(`/contact/${id}`);
+      console.log(res.data);
+      if (res.status == 200) {
+        navigate("/contact/list");
+      }
+      console.log(res.data.message);
     } catch (error) {
       console.log(error);
     }
@@ -101,6 +114,15 @@ export const CreateContactPage = () => {
           <button type="submit" className="ml-auto">
             {isEdit ? "Update" : "Create"}
           </button>
+          {isEdit && (
+            <button
+              type="button"
+              className="ml-auto"
+              onClick={() => deleteContact(params.id!)}
+            >
+              Delete
+            </button>
+          )}
         </form>
       </div>
     </div>
