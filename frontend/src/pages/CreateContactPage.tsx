@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../main";
 import { useNavigate, useParams } from "react-router-dom";
+import { GenericButton } from "../components/GenericButton";
 
 export const CreateContactPage = () => {
   const [name, setName] = useState("");
@@ -82,7 +83,20 @@ export const CreateContactPage = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-4xl font-bold mb-4">Contactz</h1>
+      <div className="flex items-end mb-4 gap-4">
+        <h1 className="text-4xl font-bold">
+          {isEdit ? "Edit" : "New"} Contact
+        </h1>
+        {isEdit && (
+          <GenericButton
+            type="button"
+            onClick={() => deleteContact(params.id!)}
+            btnType="danger"
+          >
+            Delete
+          </GenericButton>
+        )}
+      </div>
       <div className="border-2 rounded-xl p-4">
         <form
           className="flex flex-col"
@@ -111,18 +125,21 @@ export const CreateContactPage = () => {
               onChange={(e) => setContactNo(e.target.value)}
             />
           </div>
-          <button type="submit" className="ml-auto">
-            {isEdit ? "Update" : "Create"}
-          </button>
-          {isEdit && (
-            <button
+          <div className="flex justify-between mt-4">
+            <GenericButton
               type="button"
-              className="ml-auto"
-              onClick={() => deleteContact(params.id!)}
+              btnType="default"
+              onClick={() => navigate("/contact/list")}
             >
-              Delete
-            </button>
-          )}
+              Back
+            </GenericButton>
+            <GenericButton
+              type="submit"
+              btnType={isEdit ? "secondary" : "primary"}
+            >
+              {isEdit ? "Save" : "Create"}
+            </GenericButton>
+          </div>
         </form>
       </div>
     </div>

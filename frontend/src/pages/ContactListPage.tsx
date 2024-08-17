@@ -3,6 +3,7 @@ import { Contact } from "../../constants/types";
 import { axiosInstance } from "../main";
 import { ContactWrapper } from "../components/ContactWrapper";
 import { useNavigate } from "react-router-dom";
+import { GenericButton } from "../components/GenericButton";
 
 export const ContactListPage = () => {
   const navigate = useNavigate();
@@ -40,12 +41,13 @@ export const ContactListPage = () => {
           </div>
         </div>
       </div>
-      <button
-        className="ml-auto rounded-lg px-4 py-2 bg-slate-700"
+      <GenericButton
+        btnType="primary"
+        className="ml-auto"
         onClick={() => navigate("/contact")}
       >
-        Add Contact
-      </button>
+        New Contact
+      </GenericButton>
     </div>
   );
 };
