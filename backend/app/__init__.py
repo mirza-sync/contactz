@@ -107,5 +107,18 @@ def update_contact(id):
         return jsonify({"message": "Error updating contact"})
 
 
+@app.route("/contact/<id>", methods=["DELETE"])
+def delete_contact(id):
+    try:
+        res = db.contacts.delete_one({"_id": ObjectId(id)})
+        if res.deleted_count >= 1:
+            return jsonify({"message": "Contact deleted"}), 200
+        else:
+            return jsonify({"message": "Contact not found"}), 404
+    except Exception as e:
+        print("Delete contact error:", e)
+        return jsonify({"message": "Error delete contact"})
+
+
 if __name__ == "__main__":
     app.run(debug=True)
