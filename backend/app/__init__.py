@@ -3,7 +3,7 @@ from flask_pymongo import PyMongo, ObjectId
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
-from marshmallow import Schema, fields, ValidationError
+from marshmallow import Schema, fields, ValidationError, validate
 
 load_dotenv()
 
@@ -14,8 +14,8 @@ mongo = PyMongo(app)
 
 class ContactSchema(Schema):
     _id = fields.Str(dump_only=True)
-    name = fields.Str(required=True)
-    contactNo = fields.Str(required=True)
+    name = fields.Str(required=True, validate=validate.Length(min=1))
+    contactNo = fields.Str(required=True, validate=validate.Length(min=10, max=11))
 
 
 contact_schema = ContactSchema()
@@ -68,6 +68,43 @@ def get_contacts():
                 "message": "Error fetching contacts",
             }
         )
+
+
+@app.route("/contact/<id>", methods=["GET"])
+def get_contact_by_id(id):
+    try:
+        contact = db.contacts.find_one({"_id": ObjectId(id)})
+        if contact:
+            return jsonify(contact_schema.dump(contact)), 200
+        else:
+            return jsonify({"message": "Contact not found"}), 404
+    except Exception as e:
+        print("Get contact error:", e)
+        return jsonify({"message": "Error fetching contact"})
+
+
+@app.route("/contact/<id>", methods=["PATCH"])
+def update_contact(id):
+    contact = db.contacts.find_one({"_id": ObjectId(id)})
+    if not contact:
+        return jsonify({"message": "Contact not found"}), 404
+
+    try:
+        data = contact_schema.load(request.json)
+    except ValidationError as err:
+        return jsonify(err.messages), 400
+
+    try:
+        res = db.contacts.update_one({"_id": ObjectId(id)}, {"$set": data})
+        print(res)
+        if res.modified_count >= 1:
+            contact = db.contacts.find_one({"_id": ObjectId(id)})
+            return jsonify(contact_schema.dump(contact)), 200
+        else:
+            return jsonify({"message": "No changes made"}), 200
+    except Exception as e:
+        print("Update contact error:", e)
+        return jsonify({"message": "Error updating contact"})
 
 
 if __name__ == "__main__":
