@@ -1,5 +1,5 @@
 type ButtonProps = {
-  btnType?: "primary" | "secondary" | "danger" | "default";
+  variant?: "primary" | "secondary" | "danger" | "default";
   children: React.ReactNode;
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -7,13 +7,13 @@ type ButtonProps = {
 >;
 
 export const GenericButton = ({
-  btnType = "default",
+  variant = "default",
   children,
   ...rest
 }: ButtonProps) => {
   const getCssClass = () => {
     let cssClass = "";
-    switch (btnType) {
+    switch (variant) {
       case "primary":
         cssClass = "bg-green-600";
         break;

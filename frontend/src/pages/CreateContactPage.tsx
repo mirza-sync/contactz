@@ -91,7 +91,7 @@ export const CreateContactPage = () => {
           <GenericButton
             type="button"
             onClick={() => deleteContact(params.id!)}
-            btnType="danger"
+            variant="danger"
           >
             Delete
           </GenericButton>
@@ -128,14 +128,14 @@ export const CreateContactPage = () => {
           <div className="flex justify-between mt-4">
             <GenericButton
               type="button"
-              btnType="default"
+              variant="default"
               onClick={() => navigate("/contact/list")}
             >
               Back
             </GenericButton>
             <GenericButton
               type="submit"
-              btnType={isEdit ? "secondary" : "primary"}
+              variant={isEdit ? "secondary" : "primary"}
             >
               {isEdit ? "Save" : "Create"}
             </GenericButton>

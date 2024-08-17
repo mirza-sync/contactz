@@ -42,7 +42,7 @@ export const ContactListPage = () => {
         </div>
       </div>
       <GenericButton
-        btnType="primary"
+        variant="primary"
         className="ml-auto"
         onClick={() => navigate("/contact")}
       >
