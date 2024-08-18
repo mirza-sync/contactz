@@ -76,3 +76,11 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.custom-gradient {
+  background: linear-gradient(
+    45deg,
+    hsla(225, 75%, 44%, 1) 0%,
+    hsla(325, 75%, 44%, 1) 100%
+  );
+}

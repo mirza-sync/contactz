@@ -13,8 +13,9 @@ export const ContactWrapper = ({ contact, position }: ContactWrapperProps) => {
     <div
       key={contact._id}
       className={`${
-        position == "left" ? "rounded-s-lg" : "rounded-e-lg"
-      } bg-slate-500 w-full mb-4 cursor-pointer px-4 py-2`}
+        position == "left" ? "rounded-s-lg" : "rounded-e-lg text-end"
+      } 
+        bg-white text-black w-full mb-4 cursor-pointer px-4 py-2`}
       onClick={() => navigate(`/contact/${contact._id}`)}
     >
       {position == "left" ? contact.name : contact.contactNo}

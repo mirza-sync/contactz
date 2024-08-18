@@ -100,7 +100,7 @@ export const CreateContactPage = () => {
 
   return (
     <div className="flex flex-col flex-grow max-w-md">
-      <div className="flex items-end mb-4 gap-4">
+      <div className="flex justify-between mb-4 px-4 items-end">
         <h1 className="text-4xl font-bold">
           {isEdit ? "Edit" : "New"} Contact
         </h1>
@@ -114,23 +114,28 @@ export const CreateContactPage = () => {
           </GenericButton>
         )}
       </div>
-      <div className="border-2 rounded-xl p-4">
+      <div className="rounded-xl p-6 custom-gradient">
         <form
-          className="flex flex-col"
+          className="flex flex-col gap-4"
           onSubmit={(e) => handleCreateContact(e)}
         >
           <div className="flex flex-col">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name" className="font-bold">
+              Name
+            </label>
             <input
               id="name"
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="h-8 bg-white rounded text-black p-2"
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="contactNo">Contact Number</label>
+            <label htmlFor="contactNo" className="font-bold">
+              Contact Number
+            </label>
             <input
               id="contactNo"
               type="text"
@@ -140,9 +145,10 @@ export const CreateContactPage = () => {
               maxLength={11}
               value={contactNo}
               onChange={(e) => setContactNo(e.target.value)}
+              className="h-8 bg-white rounded text-black p-2"
             />
           </div>
-          <div className="flex justify-between mt-4">
+          <div className="flex justify-between mt-8">
             <GenericButton
               type="button"
               variant="default"

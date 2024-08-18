@@ -15,16 +15,16 @@ export const GenericButton = ({
     let cssClass = "";
     switch (variant) {
       case "primary":
-        cssClass = "bg-green-600";
+        cssClass = "bg-green-600 ring-2 ring-green-600";
         break;
       case "danger":
         cssClass = "bg-red-500";
         break;
       case "secondary":
-        cssClass = "bg-blue-500";
+        cssClass = "bg-blue-700 ring-2 ring-blue-700";
         break;
       default:
-        cssClass = "bg-slate-500";
+        cssClass = "bg-[#f5f5f5] text-black outline-black";
         break;
     }
     return cssClass;
@@ -33,7 +33,7 @@ export const GenericButton = ({
     <button
       {...rest}
       className={`
-        hover:outline outline-2 rounded-lg px-3 py-1
+        hover:outline outline-2 rounded-lg px-3 pt-[2px] pb-1 font-semibold h-fit
         ${getCssClass()} ${rest.className || ""}
      `}
     >
