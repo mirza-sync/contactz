@@ -28,11 +28,11 @@ export const ContactListPage = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 h-[80vh] w-[50vw]">
+    <div className="flex flex-col gap-4 h-[80vh] md:w-[50vw] px-4">
       <div className="flex justify-between items-end">
         <h1 className="text-4xl font-bold">Contact List</h1>
         <GenericButton variant="primary" onClick={() => navigate("/contact")}>
-          New Contact
+          <span className="font-extrabold">+</span> New
         </GenericButton>
       </div>
       <div className="border-[1px] rounded-lg border-white overflow-y-auto p-4">

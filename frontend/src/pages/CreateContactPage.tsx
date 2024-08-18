@@ -99,7 +99,7 @@ export const CreateContactPage = () => {
   };
 
   return (
-    <div className="flex flex-col flex-grow max-w-md">
+    <div className="flex flex-col flex-grow max-w-md px-4">
       <div className="flex justify-between mb-4 px-4 items-end">
         <h1 className="text-4xl font-bold">
           {isEdit ? "Edit" : "New"} Contact
