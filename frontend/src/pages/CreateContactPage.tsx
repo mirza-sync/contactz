@@ -144,7 +144,10 @@ export const CreateContactPage = () => {
               minLength={10}
               maxLength={11}
               value={contactNo}
-              onChange={(e) => setContactNo(e.target.value)}
+              onChange={(e) => {
+                if (!isNaN(Number(e.target.value)))
+                  setContactNo(e.target.value);
+              }}
               className="h-8 bg-white rounded text-black p-2"
             />
           </div>
